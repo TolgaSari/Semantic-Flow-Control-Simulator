@@ -1,0 +1,51 @@
+# config.yaml
+
+# General settings
+test_no_filter: true
+test_ewma: true
+test_kalman: true
+test_semantic_kalman: true
+
+# Vehicle settings
+init_ego_state: [5, 0, 0, 5, 0, 0]
+car_width: 20.0
+car_length: 20.0
+vehicle_init_state: [0, 1, 0.05, 5, 0.1, -0.01]
+
+# Test settings
+period: 0.1
+noise_list: [1.0e-9, 2.0e-9, 3.0e-9, 4.0e-9, 5.0e-9]
+trials: 100
+logger_size: 1000
+
+# Kalman filter settings
+acceleration_std_dev: 0.01
+B_matrix: [0.0, 0.0]
+x0_initial: [0, 0, 0, 0, 0, 0]
+P0_initial: 1.0
+
+localization_mse: 0.60
+velocity_mse: 0.1
+acceleration_mse: 0.01
+
+R_vector: [0.36, 0.01, 0.0001, 0.36, 0.01, 0.0001]
+
+# Semantic Kalman filter settings
+
+# First Test Version (Without IMU)
+test_set_1:
+  use_velocity_measurement: false
+  use_acceleration_measurement: false
+  warmup: 1.5
+  semantic_ranges: [0.00, 1.5]
+  max_skip: 1
+  slope_value: 2
+
+# Second Test Version (With IMU)
+test_set_2:
+  use_velocity_measurement: true
+  use_acceleration_measurement: true
+  warmup: 1.5
+  semantic_ranges: [0.0, 1.5]
+  max_skip: 1
+  slope_value: 2
