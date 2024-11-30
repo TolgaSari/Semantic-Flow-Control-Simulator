@@ -6,7 +6,6 @@ This project implements a semantic flow control strategy for task-oriented local
 ## Features
 - **Semantic Flow Control**: Adjusts beacon transmissions based on uncertainty to reduce communication costs.
 - **Localization Methods**:
-  - Time of Arrival (ToA)
   - Time Difference of Arrival (TDoA)
 - **Filtering Techniques**:
   - Kalman Filter
@@ -32,24 +31,24 @@ pip install numpy scipy matplotlib pyyaml seaborn pandas
 
 ## Repository Structure
 ```
-├── EgoVehicle.py             # Main class for the ego vehicle simulation
-├── Vehicle.py                # Base class for general vehicle dynamics
-├── multilaterate.py          # Functions for multilateration using TDoA
-├── tdoa_demo.py              # Demo showcasing TDoA-based localization
-├── tdoa_test.py              # Comprehensive testing framework for localization
-├── imu_test.py               # Tests for scenarios with IMU data
-├── filters/                  # Directory for filter implementations
-│   ├── KalmanFilter.py       # Standard Kalman filter implementation
+├── EgoVehicle.py               # Main class for the ego vehicle simulation
+├── Vehicle.py                  # Base class for general vehicle dynamics
+├── multilaterate.py            # Functions for multilateration using TDoA
+├── tdoa_demo.py                # Demo showcasing TDoA-based localization
+├── tdoa_test.py                # Comprehensive testing framework for localization
+├── imu_test.py                 # Tests for scenarios with IMU data
+├── filters/                    # Directory for filter implementations
+│   ├── KalmanFilter.py         # Standard Kalman filter implementation
 │   ├── SemanticKalmanFilter.py # Semantic Kalman filter implementation
-│   └── EWMA.py               # Exponentially Weighted Moving Average filter
-├── config.yaml               # Configuration file for experiments
-├── LICENSE                   # Licensing information
-├── README.md                 # Project documentation
-├── Logger.py                 # Logging utility
-├── StepVisualizer.py         # Visualization utility
-├── Test.py                   # Individual test case implementation
-├── TestSuite.py              # Test suite management
-└── draw_figures.py           # Script to plot results
+│   └── EWMA.py                 # Exponentially Weighted Moving Average filter
+├── config.yaml                 # Configuration file for experiments
+├── LICENSE                     # Licensing information
+├── README.md                   # Project documentation
+├── Logger.py                   # Logging utility
+├── StepVisualizer.py           # Visualization utility
+├── Test.py                     # Individual test case implementation
+├── TestSuite.py                # Test suite management
+└── draw_figures.py             # Script to plot results
 ```
 
 ### Configuration
@@ -88,10 +87,10 @@ python draw_figures.py
 If you use this code in your research, please cite appropriately:
 
 ```
-@article{Sari2025,
+@article{SemanticFlowControl,
   title={Semantic Flow Control for Task-Oriented Position Tracking},
-  author={Sarı, Talip Tolga},
-  journal={To be published in IEEE},
+  author={Talip Tolga Sarı, Büşra Bayram, Byung-Seo Kim, Gökhan Seçinti},
+  journal={To be published},
   year={2024}
 }
 ```
