@@ -94,15 +94,3 @@ If you use this code in your research, please cite appropriately:
   year={2024}
 }
 ```
-
-### License
-
-This project incorporates code from multilateration, originally licensed under the MIT License.
-```
-Copyright (c) 2018 michael
-```
-
-All additional code is 
-```
-Copyright (c) 2024 Talip Tolga Sarı
-```
