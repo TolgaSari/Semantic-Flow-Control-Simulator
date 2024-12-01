@@ -218,8 +218,6 @@ def tdoaEstimation(rec_times, towers, x_init):
         """ x is 2 element array of x, y of the transmitter"""
         firstSet = (np.linalg.norm(x - p_c, axis=1) - np.linalg.norm(x - all_p_i, axis=1) + v*(all_t_i - t_c) )
         secondSet = (np.linalg.norm(x - next_p_c, axis=1) - np.linalg.norm(x - next_all_p_i, axis=1) + v*((next_all_t_i - next_t_c)) )
-        #print("fuck", firstSet, secondSet, np.concatenate((firstSet, secondSet))
-        
         return np.concatenate((firstSet, secondSet))
 
 
@@ -228,12 +226,10 @@ def tdoaEstimation(rec_times, towers, x_init):
     # Find a value of x such that eval_solution is minimized.
     # Remember the receive times have error added to them: rec_time_noise_stdd.
     bounds = ([ 0, 0], [ 10, 2.5])
-#    print(bounds)
     alpha = 1
     try:
         res = least_squares(eval_solution2, x_init, loss="linear", bounds=bounds)
     except:
-        print('why')
         res = None # should cause error in the plot but whatever
     finally:
         res.x = alpha * res.x + (1-alpha) * x_init
@@ -247,23 +243,6 @@ def plotLoci(ax, rec_times, towers, v, delta_d, max_d):
         y = towers[i][1]
         ax.scatter(x, y)
         ax.annotate('Anchor '+str(i), (x, y))
-
-#    ax.scatter(tx[0], tx[1])
-#    ax.annotate('Tx', (tx[0], tx[1]))
-
-    # Iterate over every unique combination of towers and plot nifty stuff.
-#    for i in range(num_towers):
-#        if(plot_trilateration_circles):
-#            # Circle from tower i to tx site
-#            circle1 = (towers[i][0], towers[i][1], distances[i])
-#            circle = plt.Circle((circle1[0], circle1[1]),
-#                                radius=circle1[2], fill=False)
-#            ax.add_artist(circle)
-#        for j in range(i+1, num_towers):
-#            if(plot_lines_between_towers):
-#                # Line between towers
-#                ax.plot((towers[i][0], towers[j][0]),
-#                        (towers[i][1], towers[j][1]))
 
     for locus in loci:
         ax.plot(locus[0], locus[1], linewidth=1.0)
