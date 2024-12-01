@@ -81,16 +81,3 @@ This runs multiple parallel tests with Inertial Measurement Unit (IMU) data and 
 ```bash
 python draw_figures.py
 ```
-
-### Citation
-
-If you use this code in your research, please cite appropriately:
-
-```
-@article{SemanticFlowControl,
-  title={Semantic Flow Control for Task-Oriented Position Tracking},
-  author={Talip Tolga Sarı, Büşra Bayram, Byung-Seo Kim, Gökhan Seçinti},
-  journal={To be published},
-  year={2024}
-}
-```
