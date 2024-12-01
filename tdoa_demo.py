@@ -45,12 +45,14 @@ if __name__ == '__main__':
     # Sampling Period
     period = config['period']
 
-    noise = config['noise_list'][-1]  # Assuming using the first noise value for demo
+    noise = config['noise_list'][0]  # Assuming using the first noise value for demo
     logger_size = config['logger_size']
 
     # Generate a random initial state variation
     random_variation = np.random.uniform(-1,1,6) * np.array([2, 0.5, 0.1, 0.5, 0.05, 0.01])
     test_state = random_variation + init_state.T
+
+    test_set = "test_set_2"
 
     print("Initial State:", init_state)
     print("Test State:", test_state)
@@ -58,14 +60,14 @@ if __name__ == '__main__':
     # Kalman filter parameters from config
     F_generator = Vehicle.get_f
     B = np.array(config['B_matrix'])
-    H = np.array(config['H_matrix'])
+    H = np.eye(6)
     x0 = np.array(config['x0_initial'])
     P0 = np.eye(6) * config['P0_initial']
     localization_mse = config['localization_mse']
 
     # Adjust R_vector based on whether measurements are used
-    use_velocity = config['use_velocity_measurement']
-    use_acceleration = config['use_acceleration_measurement']
+    use_velocity = config[test_set]['use_velocity_measurement']
+    use_acceleration = config[test_set]['use_acceleration_measurement']
 
     # Define measurement labels in the order they appear in H_matrix and R_vector
     measurement_labels = ['x', 'vx', 'ax', 'y', 'vy', 'ay']
@@ -73,24 +75,24 @@ if __name__ == '__main__':
     # Determine which measurements are active based on configuration
     active_measurements = ['x']  # Always include position measurements
 
-    if config['use_velocity_measurement']:
+    if use_velocity:
         active_measurements += ['vx']
 
-    if config['use_acceleration_measurement']:
+    if use_acceleration:
         active_measurements += ['ax']
 
     active_measurements += ['y']  # Always include position measurements
 
-    if config['use_velocity_measurement']:
+    if use_velocity:
         active_measurements += ['vy']
 
-    if config['use_acceleration_measurement']:
+    if use_acceleration:
         active_measurements += ['ay']
 
     active_indices = [measurement_labels.index(label) for label in active_measurements]
 
     # Load full H_matrix and R_vector from config
-    full_H = np.array(config['H_matrix'])
+    full_H = np.eye(6)
     full_R_vector = np.array(config['R_vector'])
 
     # Select only the rows corresponding to active measurements
@@ -99,12 +101,10 @@ if __name__ == '__main__':
     # Select corresponding elements from R_vector and form a diagonal matrix
     R = np.diag(full_R_vector[active_indices])
 
-    print(H, R)
-
     acceleration_std_dev = config['acceleration_std_dev']
-    semantic_ranges = np.array(config['semantic_ranges'])
+    semantic_ranges = np.array(config[test_set]['semantic_ranges'])
     warmup = int(config[test_set]['warmup']//period)
-    slope_value = config['slope_value']
+    slope_value = config[test_set]['slope_value']
 
     # Visualization setup
     fig, ax = plt.subplots(3, 1, figsize=(15, 10))
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     # Semantic Kalman Filter
     def create_semantic_kalman_filter():
         filter_instance = SemanticKalmanFilter(F_generator, period, B, H, x0, P0, R, acceleration_std_dev)
-        max_slots = int(config["max_skip"]// period)
+        max_slots = int(config[test_set]["max_skip"]// period)
         filter_instance.set_parameters(semantic_ranges, max_slots, warmup, slope_value)
         return filter_instance
 
@@ -134,10 +134,10 @@ if __name__ == '__main__':
         'color': 'green'
     })
     state_size = 2
-    if config['use_velocity_measurement']:
+    if use_velocity:
         state_size += 2
 
-    if config['use_acceleration_measurement']:
+    if use_acceleration:
         state_size += 2
 
 
@@ -160,7 +160,7 @@ if __name__ == '__main__':
     for demo_case in demo_cases:
         filter_instance = demo_case['filter']
         #np.random.seed(1)
-        ego_vehicle = EgoVehicle(init_ego_state, anchors, TdoaLocalizer(), filter_instance, config)
+        ego_vehicle = EgoVehicle(init_ego_state, anchors, TdoaLocalizer(), filter_instance, config, test_set)
 
         test = Test(ego_vehicle, StepVisualizer(0.3, 20, bounds), logger_size, False, bounds)
         test.setVehicle(test_state.T)
