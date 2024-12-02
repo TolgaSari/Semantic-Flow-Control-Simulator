@@ -1,7 +1,7 @@
 
-# Blind Spot: Semantic Localization for Ego Vehicles
+# Semantic Flow Control for Position tracking
 
-This project implements a semantic flow control strategy for task-oriented localization in autonomous vehicles. The focus is on reducing communication overhead without compromising localization accuracy, leveraging filters like Kalman and Semantic Kalman filters.
+This project implements a semantic flow control strategy for task-oriented localization for position tracking systems. The focus is on reducing communication overhead without compromising localization accuracy, leveraging filters like Kalman and Kalman filter with Semantic Flow Control.
 
 ## Features
 - **Semantic Flow Control**: Adjusts beacon transmissions based on uncertainty to reduce communication costs.
